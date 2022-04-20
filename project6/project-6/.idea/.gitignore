@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../../../:\Users\eriks\OneDrive - Østfold University College\Parallel programmering\Repo\assignment-AleksanderVEriksen\assignment4_solution\matrix-matrix-mul\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
