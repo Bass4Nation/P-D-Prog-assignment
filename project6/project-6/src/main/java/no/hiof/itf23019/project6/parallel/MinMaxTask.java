@@ -8,7 +8,7 @@ import java.util.concurrent.RecursiveTask;
 public class MinMaxTask extends RecursiveTask {
 
 
-    private int arr[];
+    private int[] arr;
 
     public MinMaxTask(int arr[]){
         this.arr = arr;
@@ -17,7 +17,6 @@ public class MinMaxTask extends RecursiveTask {
     @Override
     protected int[] compute() {
 
-        int[] minMax = new int[arr.length];
         int threshold = 5;
 
         if(arr.length < threshold){
