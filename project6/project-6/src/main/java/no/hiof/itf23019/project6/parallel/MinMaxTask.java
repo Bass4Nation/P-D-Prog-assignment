@@ -2,25 +2,38 @@ package no.hiof.itf23019.project6.parallel;
 
 import no.hiof.itf23019.project6.serial.MinMaxSerial;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.RecursiveTask;
 
-public class MinMaxTask extends RecursiveTask {
+public class MinMaxTask extends RecursiveAction {
 
 
     private int[] arr;
+    private static int count = 0;
+//    private static int[][] num = new int[1][100];
+    private static List <int[]> num = new ArrayList<>();
 
-    public MinMaxTask(int arr[]){
+
+
+    public MinMaxTask(int[] arr){
         this.arr = arr;
     }
 
     @Override
-    protected int[] compute() {
+    protected void compute() {
 
-        int threshold = 5;
+        int threshold = 100;
+
 
         if(arr.length < threshold){
-           return new MinMaxSerial().calculate(arr);
+
+            num.add(getMinMax(arr));
+//            count++;
+
         }else{
 //            Find midpoint
             int mid = arr.length / 2 ;
@@ -38,16 +51,33 @@ public class MinMaxTask extends RecursiveTask {
             MinMaxTask t1 = new MinMaxTask(arr1);
             MinMaxTask t2 = new MinMaxTask(arr2);
 
-            t1.fork();
-            t2.fork();
+            invokeAll(t1,t2);
 
-            t1.join();
-            t2.join();
 
-            int[] test = new int[0];
-
-            return test;
         }
 
+    }
+
+    public static int[] getMinMax (int[] arr){
+        int[] minMax = new int[2];
+        int min = 100_000_000;
+        int max = 0;
+
+        for(int i = 0; i < arr.length; i++){
+            if(arr[i] < min){
+                min = arr[i];
+            }
+            if(arr[i] > max){
+                max = arr[i];
+            }
+        }
+        minMax[0] = min;
+        minMax[1] = max;
+
+        return minMax;
+    }
+
+    public static List<int[]> getNum() {
+        return num;
     }
 }
