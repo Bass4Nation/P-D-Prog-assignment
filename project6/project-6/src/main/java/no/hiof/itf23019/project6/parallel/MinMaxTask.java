@@ -13,8 +13,6 @@ public class MinMaxTask extends RecursiveAction {
 
 
     private int[] arr;
-    private static int count = 0;
-//    private static int[][] num = new int[1][100];
     private static List <int[]> num = new ArrayList<>();
 
 
@@ -32,7 +30,6 @@ public class MinMaxTask extends RecursiveAction {
         if(arr.length < threshold){
 
             num.add(getMinMax(arr));
-//            count++;
 
         }else{
 //            Find midpoint
@@ -41,11 +38,6 @@ public class MinMaxTask extends RecursiveAction {
 //            Arrays size with of mid
             int[] arr1 = Arrays.copyOfRange(arr, 0, mid);
             int[] arr2 = Arrays.copyOfRange(arr, mid, arr.length);
-
-
-//            System.out.println(Arrays.toString(arr));
-//            System.out.println(Arrays.toString(arr1));
-//            System.out.println(Arrays.toString(arr2));
 
 
             MinMaxTask t1 = new MinMaxTask(arr1);

@@ -9,8 +9,9 @@ public class MinMaxParallel {
     public int[] minMaxPar(int[] arr){
 
         ForkJoinPool.commonPool().invoke(new MinMaxTask(arr));
+        List<int[]> numbers = MinMaxTask.getNum();
 
-        return getMinMax(MinMaxTask.getNum());
+        return getMinMax(numbers);
     }
 
     public int[] getMinMax(List<int[]> arr){
@@ -18,17 +19,22 @@ public class MinMaxParallel {
 
         int min = 100_000_000;
         int max = 0;
+        try{
+            for (int i = 0; i < arr.size(); i++){
+                int[] test = arr.get(i);
+                if(test[0] < min) {
+                    min = test[0];
+                }
+                if(test[1] > max) {
+                    max = test[1];
+                }
+            }
+            minMax[0] = min;
+            minMax[1] = max;
 
-        for (int i = 0; i < arr.size(); i++){
-            if(arr.get(i)[0] < min) {
-                min = arr.get(i)[0];
-            }
-            if(arr.get(i)[1] > max) {
-                max = arr.get(i)[1];
-            }
+        } catch (Exception e){
+            System.out.println("Error: " + e);
         }
-        minMax[0] = min;
-        minMax[1] = max;
 
         return minMax;
     }

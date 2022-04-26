@@ -4,9 +4,9 @@ import no.hiof.itf23019.project6.parallel.MinMaxParallel;
 import no.hiof.itf23019.project6.serial.MinMaxSerial;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -16,7 +16,7 @@ public class Main
 
 //        Test numbers before file reader
         int[] testArr = {1,2,3,4,5,6,7,81,5,6,8};
-        File file = new File("numbers5000.txt");
+        File file = new File("numbers1000.txt");
         int[] numbers = readFile_ToNumbers(file);
 //        System.out.println(Arrays.toString(numbers));
 
@@ -43,7 +43,9 @@ public class Main
         parallelTime = (endtime - starttime);
         System.out.println(Arrays.toString(parallel));
         System.out.println("Parallel time = "+parallelTime + "ms");
+        printData(serialTime,parallelTime);
 
+//        fileWriter(1_000_000, "numbers1_000_000.txt");
 
     }
     private static int[] readFile_ToNumbers(File numbers) throws FileNotFoundException {
@@ -68,5 +70,40 @@ public class Main
         return k;
     }
 
+    private static void printData (double serial, double parallel){
+        double core = Runtime.getRuntime().availableProcessors();
+        double speedupPar = serial/parallel;
+        double effPar = ((speedupPar * core) * 100);
 
+
+        System.out.printf("-----------------------\n" +
+                "Serial Time: %f ms \n" +
+                "Parallel Time: %f ms\n" +
+                "----- Speedup -------\n" +
+                "Parallel is %f times faster then serial\n" +
+                "----- Efficiency ------\n" +
+                "Parallel Efficiency: %f %%\n" +
+                "----------------------------------------\n",serial,parallel, speedupPar, effPar);
+    }
+
+    private static void fileWriter(int num, String filename) throws FileNotFoundException {
+        Random ran = new Random();
+        int number = 0;
+        try (PrintWriter file = new PrintWriter(
+                new BufferedWriter(
+                        new FileWriter(filename)));
+        ) {
+
+            for (int i = 1; i <= num; i++) {
+                number = ran.nextInt(num);
+                file.println(number);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("File test1.txt has been created!");
+
+
+    }
 }
