@@ -16,9 +16,8 @@ public class Main
 
 //        Test numbers before file reader
         int[] testArr = {1,2,3,4,5,6,7,81,5,6,8};
-        File file = new File("numbers1000.txt");
+        File file = new File("numbers100_000.txt");
         int[] numbers = readFile_ToNumbers(file);
-//        System.out.println(Arrays.toString(numbers));
 
 
 
@@ -43,16 +42,22 @@ public class Main
         parallelTime = (endtime - starttime);
         System.out.println(Arrays.toString(parallel));
         System.out.println("Parallel time = "+parallelTime + "ms");
-        printData(serialTime,parallelTime);
+
+        // Comparing serial with parallel, both min and max values
+        if(serial[0] == parallel[0] && serial[1] == parallel[1]){
+            printData(serialTime,parallelTime);
+        }
+
+
 
 //        fileWriter(1_000_000, "numbers1_000_000.txt");
 
     }
+//    Filereader
     private static int[] readFile_ToNumbers(File numbers) throws FileNotFoundException {
 
         Scanner scanner1 = new Scanner(numbers);
         Scanner scanner2 = new Scanner(numbers);
-//        System.out.println(scanner1.nextInt());
         int Rows = 0;
 
 
@@ -70,6 +75,7 @@ public class Main
         return k;
     }
 
+// Output print
     private static void printData (double serial, double parallel){
         double core = Runtime.getRuntime().availableProcessors();
         double speedupPar = serial/parallel;

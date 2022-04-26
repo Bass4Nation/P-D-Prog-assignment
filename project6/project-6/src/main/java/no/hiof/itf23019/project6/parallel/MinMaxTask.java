@@ -1,19 +1,14 @@
 package no.hiof.itf23019.project6.parallel;
 
-import no.hiof.itf23019.project6.serial.MinMaxSerial;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
-import java.util.concurrent.RecursiveTask;
 
 public class MinMaxTask extends RecursiveAction {
 
 
-    private int[] arr;
-    private static List <int[]> num = new ArrayList<>();
+    private final int[] arr;
+    private static int MIN = 100_000_000;
+    private static int MAX = 0;
 
 
 
@@ -28,48 +23,57 @@ public class MinMaxTask extends RecursiveAction {
 
 
         if(arr.length < threshold){
-
-            num.add(getMinMax(arr));
+            getMinMax(arr);
 
         }else{
 //            Find midpoint
             int mid = arr.length / 2 ;
 
+
 //            Arrays size with of mid
             int[] arr1 = Arrays.copyOfRange(arr, 0, mid);
-            int[] arr2 = Arrays.copyOfRange(arr, mid, arr.length);
-
+            int[] arr2 = Arrays.copyOfRange(arr, mid, arr.length - 1);
 
             MinMaxTask t1 = new MinMaxTask(arr1);
             MinMaxTask t2 = new MinMaxTask(arr2);
 
-            invokeAll(t1,t2);
+            t1.fork();
+            t2.fork();
+
+            t1.join();
+            t2.join();
 
 
         }
 
     }
 
-    public static int[] getMinMax (int[] arr){
-        int[] minMax = new int[2];
-        int min = 100_000_000;
-        int max = 0;
-
-        for(int i = 0; i < arr.length; i++){
-            if(arr[i] < min){
-                min = arr[i];
+    public static void getMinMax (int[] arr){
+//        For each number in array
+        for (int number : arr) {
+//            Check if smaller/larger than MIN and MAX. If so set that number to their value
+            if (number < MIN) {
+                setMIN(number);
             }
-            if(arr[i] > max){
-                max = arr[i];
+            if (number > MAX) {
+                setMAX(number);
             }
         }
-        minMax[0] = min;
-        minMax[1] = max;
-
-        return minMax;
     }
 
-    public static List<int[]> getNum() {
-        return num;
+    public static int getMIN() {
+        return MIN;
+    }
+
+    public static void setMIN(int MIN) {
+        MinMaxTask.MIN = MIN;
+    }
+
+    public static int getMAX() {
+        return MAX;
+    }
+
+    public static void setMAX(int MAX) {
+        MinMaxTask.MAX = MAX;
     }
 }
