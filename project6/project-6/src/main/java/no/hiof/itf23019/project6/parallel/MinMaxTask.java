@@ -19,12 +19,11 @@ public class MinMaxTask extends RecursiveAction {
     @Override
     protected void compute() {
 
-        int threshold = 100;
+        int threshold = 500;
 
 
         if(arr.length < threshold){
             getMinMax(arr);
-
         }else{
 //            Find midpoint
             int mid = arr.length / 2 ;
@@ -32,7 +31,7 @@ public class MinMaxTask extends RecursiveAction {
 
 //            Arrays size with of mid
             int[] arr1 = Arrays.copyOfRange(arr, 0, mid);
-            int[] arr2 = Arrays.copyOfRange(arr, mid, arr.length - 1);
+            int[] arr2 = Arrays.copyOfRange(arr, mid, arr.length);
 
             MinMaxTask t1 = new MinMaxTask(arr1);
             MinMaxTask t2 = new MinMaxTask(arr2);
@@ -42,8 +41,6 @@ public class MinMaxTask extends RecursiveAction {
 
             t1.join();
             t2.join();
-
-
         }
 
     }
