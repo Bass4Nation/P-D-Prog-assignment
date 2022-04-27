@@ -16,7 +16,12 @@ public class Main
 
 //        Test numbers before file reader
         int[] testArr = {1,2,3,4,5,6,7,81,5,6,8};
-        File file = new File("numbers100_000.txt");
+//        File file = new File("numbers1000.txt");
+//        File file = new File("numbers10_000.txt");
+//        File file = new File("numbers100_000.txt");
+        File file = new File("numbers1_000_000.txt");
+//        File file = new File("numbers10_000_000.txt");
+//        File file = new File("numbers100_000_000.txt");
         int[] numbers = readFile_ToNumbers(file);
 
 
@@ -50,7 +55,7 @@ public class Main
 
 
 
-//        fileWriter(1_000_000, "numbers1_000_000.txt");
+//        fileWriter(100_000_000, "numbers100_000_000.txt");
 
     }
 //    Filereader
@@ -77,22 +82,44 @@ public class Main
 
 // Output print
     private static void printData (double serial, double parallel){
-        double core = Runtime.getRuntime().availableProcessors();
-        double speedupPar = serial/parallel;
-        double effPar = ((speedupPar * core) * 100);
+        if(parallel < serial){
+//            If parallel is faster than serial
+            double core = Runtime.getRuntime().availableProcessors();
+            System.out.println(core);
+            double speedupPar = serial/parallel;
+            double effPar = ((speedupPar / core) * 100);
 
 
-        System.out.printf("-----------------------\n" +
-                "Serial Time: %f ms \n" +
-                "Parallel Time: %f ms\n" +
-                "----- Speedup -------\n" +
-                "Parallel is %f times faster then serial\n" +
-                "----- Efficiency ------\n" +
-                "Parallel Efficiency: %f %%\n" +
-                "----------------------------------------\n",serial,parallel, speedupPar, effPar);
+            System.out.printf("-----------------------\n" +
+                    "Serial Time: %.1f ms \n" +
+                    "Parallel Time: %.1f ms\n" +
+                    "----- Speedup -------\n" +
+                    "Parallel is %.2f times faster then serial\n" +
+                    "----- Efficiency ------\n" +
+                    "Parallel Efficiency: %.1f %%\n" +
+                    "----------------------------------------\n",serial,parallel, speedupPar, effPar);
+        }else {
+//            If serial is faster than parallel
+
+            double core = Runtime.getRuntime().availableProcessors(); // Gets available processors on your pc
+
+            double speedupSer = parallel / serial;
+            double effPar = ((speedupSer / core) * 100);
+
+
+            System.out.printf("-----------------------\n" +
+                    "Serial Time: %.1f ms \n" +
+                    "Parallel Time: %.1f ms\n" +
+                    "----- Speedup -------\n" +
+                    "Serial is %.2f times faster then Parallel\n" +
+                    "----- Efficiency ------\n" +
+                    "Serial Efficiency: %.1f %%\n" +
+                    "----------------------------------------\n", serial, parallel, speedupSer, effPar);
+        }
     }
 
     private static void fileWriter(int num, String filename) throws FileNotFoundException {
+//        Just a filewriter that writes out numbers to a file.
         Random ran = new Random();
         int number = 0;
         try (PrintWriter file = new PrintWriter(
