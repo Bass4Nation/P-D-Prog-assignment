@@ -19,8 +19,8 @@ public class Main
 //        File file = new File("numbers1000.txt");
 //        File file = new File("numbers10_000.txt");
 //        File file = new File("numbers100_000.txt");
-        File file = new File("numbers1_000_000.txt");
-//        File file = new File("numbers10_000_000.txt");
+//        File file = new File("numbers1_000_000.txt");
+        File file = new File("numbers10_000_000.txt");
 //        File file = new File("numbers100_000_000.txt");
         int[] numbers = readFile_ToNumbers(file);
 

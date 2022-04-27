@@ -1,7 +1,5 @@
 package no.hiof.itf23019.project6.serial;
 
-import java.util.Arrays;
-
 public class MinMaxSerial {
 
     public int[] calculate(int[] arr){
@@ -10,12 +8,12 @@ public class MinMaxSerial {
         int[] arrMinMax = new int[2]; // Return Integer array for calculate
 
         for (int i = 0; i < arr.length; i++){
-//            Min
+//            Max
             if ( arr[i] > max){
                 max = arr[i];
                 arrMinMax[1] = arr[i];
             }
-//            Max
+//            Min
             if ( arr[i] < min){
                 min = arr[i];
                 arrMinMax[0] = arr[i];

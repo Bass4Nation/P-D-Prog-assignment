@@ -4,13 +4,9 @@ import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
 public class MinMaxTask extends RecursiveAction {
-
-
     private final int[] arr;
     private static int MIN = 100_000_000;
     private static int MAX = 0;
-
-
 
     public MinMaxTask(int[] arr){
         this.arr = arr;
@@ -21,13 +17,11 @@ public class MinMaxTask extends RecursiveAction {
 
         int threshold = 500;
 
-
         if(arr.length < threshold){
             getMinMax(arr);
         }else{
 //            Find midpoint
             int mid = arr.length / 2 ;
-
 
 //            Arrays size with of mid
             int[] arr1 = Arrays.copyOfRange(arr, 0, mid);
@@ -42,7 +36,6 @@ public class MinMaxTask extends RecursiveAction {
             t1.join();
             t2.join();
         }
-
     }
 
     public static void getMinMax (int[] arr){
@@ -58,6 +51,7 @@ public class MinMaxTask extends RecursiveAction {
         }
     }
 
+//    GETTERS and SETTERS
     public static int getMIN() {
         return MIN;
     }
